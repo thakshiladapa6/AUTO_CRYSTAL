@@ -10,7 +10,13 @@ jobs:
       - name: Build APK
         run: |
           docker run --rm -v "$(pwd)":/root/src -w /root/src \
-            notfl3/cargo-apk cargo quad-apk build
+            notfl3/cargo-apk sh -c '
+              ls /opt/android-sdk-linux/platforms
+              V=$(ls /opt/android-sdk-linux/platforms | sed "s/android-//" | sort -n | tail -1)
+              echo "Using Android platform $V"
+              sed -i "s/^android_version = .*/android_version = $V/; s/^target_sdk_version = .*/target_sdk_version = $V/" Cargo.toml
+              cargo quad-apk build
+            '
       - uses: actions/upload-artifact@v4
         with:
           name: apk
