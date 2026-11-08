@@ -1,0 +1,21 @@
+[package]
+name = "blockcraft"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+macroquad = "0.4"
+
+[profile.dev]
+opt-level = 3
+
+[package.metadata.android]
+package_name = "com.example.blockcraft"
+label = "BlockCraft"
+android_version = 29
+target_sdk_version = 29
+min_sdk_version = 26
+fullscreen = true
+build_targets = ["aarch64-linux-android"]
+version_code = 1
+version_name = "0.1"
