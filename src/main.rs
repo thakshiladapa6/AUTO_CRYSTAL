@@ -259,7 +259,7 @@ async fn main() {
                         look = Some((t.id, t.position, t.position, get_time(), false));
                     }
                 }
-                TouchPhase::Moved | TouchPhase::Stretched => {
+                TouchPhase::Moved => {
                     if let Some(s) = stick.as_mut() {
                         if s.0 == t.id {
                             s.2 = t.position;
@@ -422,4 +422,4 @@ async fn main() {
 
         next_frame().await;
     }
-}
+                                                                }
