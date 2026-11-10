@@ -14,13 +14,15 @@ jobs:
               rustup update stable
               rustup default stable
               rustup target add aarch64-linux-android
-              rustc --version
               V=$(ls /opt/android-sdk-linux/platforms | sed "s/android-//" | sort -n | tail -1)
-              echo "Using Android platform $V"
               sed -i "s/^android_version = .*/android_version = $V/; s/^target_sdk_version = .*/target_sdk_version = $V/" Cargo.toml
               cargo quad-apk build
+              mkdir -p /root/src/out
+              find /root/src/target -name "*.apk" -exec cp {} /root/src/out/blockcraft.apk \;
+              chmod -R a+rwX /root/src/out
             '
+          ls -la out
       - uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: target/android-artifacts/**/*.apk
+          path: out/blockcraft.apk
